@@ -1,1 +1,0 @@
-python3 /usr/local/pmu-tools/pmu-tools/toplev.py --core S0-C0 -l1
