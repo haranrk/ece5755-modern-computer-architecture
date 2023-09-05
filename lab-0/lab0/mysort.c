@@ -3,7 +3,16 @@
 #include <stdlib.h>
 
 int *mysort(int *input, int n) {
-    /***** YOUR CODE HERE *****/
+for (int i = 1; i < n; i++) {
+    int key = input[i];
+    int j = i - 1;
+    while (key < input[j] && j >= 0) {
+      input[j + 1] = input[j];
+      --j;
+    }
+    input[j + 1] = key;
+  }
+  return input;
 }
 
 // verify() checks that the array is sorted

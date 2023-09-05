@@ -1,0 +1,1 @@
+srun -p ece5755 -n 1 --mem=1g -w slurm-instructional-compute-01 --pty /bin/bash
