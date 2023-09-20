@@ -2,7 +2,6 @@
 #include "../kernel/kernel.h"
 #include "test_linear.h"
 
-
 void test_linear(void)
 {
     /**** YOUR CODE HERE ****/

@@ -5,12 +5,19 @@ float *linear(float *input, float **weights, float *biases, int inputSize, int o
     // Check for empty input
     if (input == NULL || inputSize == 0 || outputSize == 0)
     {
-    return NULL;
+        return NULL;
     }
 
     float *output = malloc(outputSize * sizeof(*output));
 
-    /**** YOUR CODE HERE ****/
+    for (int i = 0; i < outputSize; i++)
+    {
+        output[i] = biases[i];
+        for (int j = 0; j < inputSize; j++)
+        {
+            output[i] += input[j] * weights[j][i];
+        }
+    }
 
     return output;
 }

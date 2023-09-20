@@ -7,7 +7,18 @@
 
 void test_matmul_square_matrices(void)
 {
-    /**** YOUR CODE HERE ****/
+    float A[3][3] = {{1, 2, 3}, {4, 5, 6}};
+    float B[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+
+    float **C = matmul(A, B, 3, 3, 3, 3);
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            printf("C[%d][%d]: %f\n", i, j, A[i][j]);
+        }
+    }
 }
 
 void test_matmul_incompatible_dimensions(void)

@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "data_utils.h": "c",
+    "functional.h": "c"
+  }
+}
