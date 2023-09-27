@@ -28,6 +28,10 @@ void test_linear(void)
   int inputSize = 3;
   int outputSize = 3;
 
+  for (int i = 0; i < 1000; i++)
+  {
+    float *output = linear(input, weights, biases, inputSize, outputSize);
+  }
   float *output = linear(input, weights, biases, inputSize, outputSize);
 
   for (int i = 0; i < outputSize; i++)

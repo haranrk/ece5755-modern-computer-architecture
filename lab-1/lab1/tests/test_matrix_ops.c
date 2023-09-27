@@ -23,6 +23,11 @@ void test_matmul_square_matrices(void)
         }
     }
 
+    for (int i = 0; i < 1000; i++)
+    {
+        float **C = matmul(A_m, B_m, 3, 3, 3, 3);
+    }
+
     float **C = matmul(A_m, B_m, 3, 3, 3, 3);
 
     for (int i = 0; i < 3; i++)

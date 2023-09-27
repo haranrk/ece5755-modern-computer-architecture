@@ -56,6 +56,10 @@ void test_conv(void)
     float actualOutput[1][3][3] = {
         {{36, 48, 60}, {84, 96, 108}, {132, 144, 156}}};
 
+    for (int i = 0; i < 1000; i++)
+    {
+        float ***output = convolution(image, numChannels, kernel, bias, numFilters, inputSize, kernelSize);
+    }
     float ***output = convolution(image, numChannels, kernel, bias, numFilters, inputSize, kernelSize);
     const int outputSize = inputSize - kernelSize + 1;
     for (int f = 0; f < numFilters; f++)

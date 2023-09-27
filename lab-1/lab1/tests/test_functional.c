@@ -6,6 +6,11 @@
 void test_softmax(void)
 {
     float input[] = {1.0, 2.0, 3.0};
+    for (int i = 0; i < 1000; i++)
+    {
+        float *output = softmax(input, 3);
+    }
+
     float *output = softmax(input, 3);
     float sum = 0.0;
 
