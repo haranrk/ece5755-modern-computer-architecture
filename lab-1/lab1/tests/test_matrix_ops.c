@@ -69,3 +69,27 @@ void test_matmul_incompatible_dimensions(void)
     free(A);
     free(B);
 }
+
+void test_matmul_square_matrices1(void)
+{
+    int size = 100;
+    float **A_m = init_2d_array(size, size);
+    float **B_m = init_2d_array(size, size);
+
+    for (int i = 0; i < 100; i++)
+    {
+        float **C = matmul(A_m, B_m, size, size, size, size);
+    }
+}
+
+void test_matmul_square_matrices2(void)
+{
+    int size = 1000;
+    float **A_m = init_2d_array(size, size);
+    float **B_m = init_2d_array(size, size);
+
+    for (int i = 0; i < 1; i++)
+    {
+        float **C = matmul(A_m, B_m, size, size, size, size);
+    }
+}

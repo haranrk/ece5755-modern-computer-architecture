@@ -17,8 +17,10 @@ test: all_tests
 all_tests: 
 	$(CC) -o tests/$@ $(TEST_FILES) $(UNITY_FILES) $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
 	./tests/$@
+t:
+	./tests/all_tests
 
-debug_tests:
+debug_test:
 	$(CC) -g -o tests/$@ $(TEST_FILES) $(UNITY_FILES) $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
 	gdb ./tests/$@
 	

@@ -1,4 +1,14 @@
 #include "data_utils.h"
+
+float *init_1d_array(int size)
+{
+    float *array = malloc(size * sizeof(float));
+    for (int i = 0; i < size; i++)
+    {
+        array[i] = i;
+    }
+    return array;
+}
 float **init_2d_array(int rows, int cols)
 {
     // malloc a 2d array
@@ -8,7 +18,7 @@ float **init_2d_array(int rows, int cols)
         array[i] = malloc(cols * sizeof(float));
         for (int j = 0; j < cols; j++)
         {
-            array[i][j] = 0;
+            array[i][j] = i + j;
         }
     }
     return array;
@@ -24,7 +34,7 @@ float ***init_image(int channelSize, int inputSize)
             image[c][i] = malloc(inputSize * sizeof(***image));
             for (int j = 0; j < inputSize; j++)
             {
-                image[c][i][j] = 0;
+                image[c][i][j] = c + i + j;
             }
         }
     }

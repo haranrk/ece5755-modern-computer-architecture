@@ -41,3 +41,30 @@ void test_linear(void)
 }
 
 // Add more test cases as needed
+void test_linear1(void)
+{
+
+  // sample arrays for a linear layer
+  int inputSize = 100;
+  float *input = init_1d_array(inputSize);
+  float **weights = init_2d_array(inputSize, inputSize);
+  float *biases = init_1d_array(inputSize);
+
+  for (int i = 0; i < 1000; i++)
+  {
+    float *output = linear(input, weights, biases, inputSize, inputSize);
+  }
+}
+
+void test_linear2(void)
+{
+  int inputSize = 1000;
+  float *input = init_1d_array(inputSize);
+  float **weights = init_2d_array(inputSize, inputSize);
+  float *biases = init_1d_array(inputSize);
+
+  for (int i = 0; i < 1000; i++)
+  {
+    float *output = linear(input, weights, biases, inputSize, inputSize);
+  }
+}

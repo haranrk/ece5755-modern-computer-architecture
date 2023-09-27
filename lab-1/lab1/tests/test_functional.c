@@ -1,6 +1,7 @@
 #include "unity/unity.h"
 #include "../kernel/kernel.h"
 #include "test_functional.h"
+#include "../utils/data_utils.h"
 #include <float.h>
 
 void test_softmax(void)
@@ -43,6 +44,24 @@ void test_softmax(void)
     // Cleanup
     free(output);
 }
+void test_softmax1(void)
+{
+    int inputSize = 100;
+    float *input = init_1d_array(inputSize);
+    for (int i = 0; i < 100; i++)
+    {
+        float *output = softmax(input, inputSize);
+    }
+}
+void test_softmax2(void)
+{
+    int sz = 1000;
+    float *input = init_1d_array(sz);
+    for (int i = 0; i < 10; i++)
+    {
+        float *output = softmax(input, sz);
+    }
+}
 
 void test_relu(void)
 {
@@ -50,11 +69,39 @@ void test_relu(void)
     float expected_outputs[] = {3.0f, 0.0f, 0.0f};
     int test_cases = sizeof(inputs) / sizeof(inputs[0]);
 
-    for (int i = 0; i < test_cases; i++)
+    for (int j = 0; j < 100; j++)
     {
-        float output = relu(inputs[i]);
-        TEST_ASSERT_FLOAT_WITHIN(1e-6, expected_outputs[i], output);
+        for (int i = 0; i < test_cases; i++)
+        {
+            float output = relu(inputs[i]);
+            TEST_ASSERT_FLOAT_WITHIN(1e-6, expected_outputs[i], output);
+        }
     }
 }
 
-// Add more test cases as needed
+void test_relu1(void)
+{
+    int inputSize = 100;
+    float *input = init_1d_array(inputSize);
+
+    for (int j = 0; j < 100; j++)
+    {
+        for (int i = 0; i < inputSize; i++)
+        {
+            float output = relu(input[i]);
+        }
+    }
+}
+void test_relu2(void)
+{
+    int sz = 1000;
+    float *input = init_1d_array(sz);
+
+    for (int j = 0; j < 100; j++)
+    {
+        for (int i = 0; i < sz; i++)
+        {
+            float output = relu(input[i]);
+        }
+    }
+}
