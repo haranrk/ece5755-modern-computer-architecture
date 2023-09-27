@@ -1,6 +1,19 @@
 #include "data_utils.h"
-
-float ***init_image(float image_data[][5][5], int inputSize, int channelSize)
+float **init_2d_array(int rows, int cols)
+{
+    // malloc a 2d array
+    float **array = malloc(rows * sizeof(float *));
+    for (int i = 0; i < rows; i++)
+    {
+        array[i] = malloc(cols * sizeof(float));
+        for (int j = 0; j < cols; j++)
+        {
+            array[i][j] = 0;
+        }
+    }
+    return array;
+}
+float ***init_image(int channelSize, int inputSize)
 {
     float ***image = malloc(channelSize * sizeof(*image));
     for (int c = 0; c < channelSize; c++)
@@ -11,20 +24,20 @@ float ***init_image(float image_data[][5][5], int inputSize, int channelSize)
             image[c][i] = malloc(inputSize * sizeof(***image));
             for (int j = 0; j < inputSize; j++)
             {
-                image[c][i][j] = image_data[c][i][j];
+                image[c][i][j] = 0;
             }
         }
     }
     return image;
 }
 
-float ****init_kernel(float kernel_data[][1][3][3], int numFilters, int kernelSize)
+float ****init_kernel(int numFilters, int channelSize, int kernelSize)
 {
     float ****kernel = malloc(numFilters * sizeof(*kernel));
     for (int i = 0; i < numFilters; i++)
     {
-        kernel[i] = malloc(1 * sizeof(*kernel[i]));
-        for (int j = 0; j < 1; j++)
+        kernel[i] = malloc(channelSize * sizeof(*kernel[i]));
+        for (int j = 0; j < channelSize; j++)
         {
             kernel[i][j] = malloc(kernelSize * sizeof(*kernel[i][j]));
             for (int k = 0; k < kernelSize; k++)
@@ -32,7 +45,7 @@ float ****init_kernel(float kernel_data[][1][3][3], int numFilters, int kernelSi
                 kernel[i][j][k] = malloc(kernelSize * sizeof(*kernel[i][j][k]));
                 for (int m = 0; m < kernelSize; m++)
                 {
-                    kernel[i][j][k][m] = kernel_data[i][j][k][m];
+                    kernel[i][j][k][m] = 0;
                 }
             }
         }

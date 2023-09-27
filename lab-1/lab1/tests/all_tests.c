@@ -4,15 +4,18 @@
 #include "test_linear.h"
 #include "test_matrix_ops.h"
 
-void setUp(void) {
+void setUp(void)
+{
     /* Code here will run before each test */
 }
 
-void tearDown(void) {
+void tearDown(void)
+{
     /* Code here will run after each test */
 }
 
-int main(void) {
+int main(void)
+{
     UNITY_BEGIN();
 
     // Test conv

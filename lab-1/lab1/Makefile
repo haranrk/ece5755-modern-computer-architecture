@@ -17,6 +17,10 @@ test: all_tests
 all_tests: 
 	$(CC) -o tests/$@ $(TEST_FILES) $(UNITY_FILES) $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
 	./tests/$@
+
+debug_tests:
+	$(CC) -g -o tests/$@ $(TEST_FILES) $(UNITY_FILES) $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
+	gdb ./tests/$@
 	
 .PHONY: clean
 clean:

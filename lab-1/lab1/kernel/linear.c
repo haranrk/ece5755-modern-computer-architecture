@@ -15,7 +15,7 @@ float *linear(float *input, float **weights, float *biases, int inputSize, int o
         output[i] = biases[i];
         for (int j = 0; j < inputSize; j++)
         {
-            output[i] += input[j] * weights[j][i];
+            output[i] += input[j] * weights[i][j];
         }
     }
 

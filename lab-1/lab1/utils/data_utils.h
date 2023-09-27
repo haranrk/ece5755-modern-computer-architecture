@@ -10,8 +10,9 @@
 #define PARAMS_FILENAME "./model/model.h5"
 
 // Load images and labels
-float ***init_image(float image_data[][5][5], int inputSize, int channelSize);
-float ****init_kernel(float kernel_data[][1][3][3], int numFilters, int kernelSize);
+float **init_2d_array(int rows, int cols);
+float ***init_image(int channelSize, int inputSize);
+float ****init_kernel(int numFilters, int channelSize, int kernelSize);
 float ****loadImages(const char *filename, int numImages, int numChannels);
 void destroyImages(float ****images, int numImages, int numChannels);
 int *loadLabels(const char *filename, int numLabels);

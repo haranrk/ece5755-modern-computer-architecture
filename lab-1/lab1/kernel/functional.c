@@ -23,7 +23,6 @@ void applyRelu(float *input, int inputSize)
 float *softmax(float *input, int inputSize)
 {
     float *softmaxOutput = malloc(inputSize * sizeof(*softmaxOutput));
-    printf("ssd: %f\n", input[0]);
 
     float sum = 0;
     for (int i = 0; i < inputSize; i++)

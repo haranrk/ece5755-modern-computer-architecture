@@ -16,8 +16,6 @@ float ***convolution(float ***image, int numChannels, float ****kernel, float *b
         }
     }
 
-    printf("hi");
-    printf("numFilters: %d, outputSize: %d\n", numFilters, outputSize);
     for (int f = 0; f < numFilters; f++)
     {
         for (int si = 0; si < outputSize; si++)
@@ -35,6 +33,7 @@ float ***convolution(float ***image, int numChannels, float ****kernel, float *b
                             printf("Hekk\n");
                             printf("kernel[%d][%d][%d][%f]: \n", f, c, i, biasData[f]);
                             printf("Hekk\n");
+
                             printf("kernel[%d][%d][%d][%d]: %f\n", f, c, i, j, kernel[0][0][0][0]);
                             convOutput[f][si][sj] += image[c][si + i][sj + j] * kernel[f][c][si][sj];
                         }

@@ -1,5 +1,6 @@
 #include "unity/unity.h"
 #include "../kernel/kernel.h"
+#include "../utils/data_utils.h"
 #include "test_matrix_ops.h"
 
 /**** HELPER FUNCTIONS ****/
@@ -7,16 +8,28 @@
 
 void test_matmul_square_matrices(void)
 {
-    float A[3][3] = {{1, 2, 3}, {4, 5, 6}};
+    float A[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
     float B[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
-    float **C = matmul(A, B, 3, 3, 3, 3);
+    float **A_m = init_2d_array(3, 3);
+    float **B_m = init_2d_array(3, 3);
 
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
-            printf("C[%d][%d]: %f\n", i, j, A[i][j]);
+            A_m[i][j] = A[i][j];
+            B_m[i][j] = B[i][j];
+        }
+    }
+
+    float **C = matmul(A_m, B_m, 3, 3, 3, 3);
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            TEST_ASSERT_FLOAT_WITHIN(1e-6, C[i][j], A[i][j]);
         }
     }
 }
