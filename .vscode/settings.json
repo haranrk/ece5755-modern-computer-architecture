@@ -1,8 +1,0 @@
-{
-  "files.associations": {
-    "data_utils.h": "c",
-    "functional.h": "c",
-    "my_utils.h": "c",
-    "kernel.h": "c"
-  }
-}

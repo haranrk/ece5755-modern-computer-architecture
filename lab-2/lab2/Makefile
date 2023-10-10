@@ -11,8 +11,8 @@ TEST_FILES = $(wildcard ./tests/*.c)
 MODULE_TEST_FILES = $(wildcard ./tests/test*.c)
 TEST_EXECUTABLES = $(patsubst %.c,%,$(TEST_FILES))
 
-main: main.c
-	$(CC) -o main main.c $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
+main.out: main.c
+	$(CC) -o main.out main.c $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
 	./main NAIVE 100 5
 
 .PHONY: test
