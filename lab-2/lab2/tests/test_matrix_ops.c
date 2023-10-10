@@ -20,6 +20,9 @@ void test_matmul_square_matrices(void)
             TEST_ASSERT_FLOAT_WITHIN(1e-6, C[i][j], A_m[i][j]);
         }
     }
+    free(A_m);
+    free(B_m);
+    free(C);
 }
 
 void test_matmul_blocking_square_matrices(void)
@@ -37,7 +40,10 @@ void test_matmul_blocking_square_matrices(void)
                 TEST_ASSERT_FLOAT_WITHIN(1e-6, C[i][j], A_m[i][j]);
             }
         }
+        free(C);
     }
+    free(A_m);
+    free(B_m);
 }
 
 void test_matmul_incompatible_dimensions(void)
