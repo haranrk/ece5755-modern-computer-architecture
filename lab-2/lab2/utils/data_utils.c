@@ -18,8 +18,23 @@ float **init_2d_array(int rows, int cols)
         array[i] = malloc(cols * sizeof(float));
         for (int j = 0; j < cols; j++)
         {
-            array[i][j] = i + j;
+            array[i][j] = i+j;
         }
+    }
+    return array;
+}
+float **init_2d_id_array(int rows, int cols)
+{
+    // malloc a 2d identity array
+    float **array = malloc(rows * sizeof(float *));
+    for (int i = 0; i < rows; i++)
+    {
+        array[i] = malloc(cols * sizeof(float));
+        for (int j = 0; j < cols; j++)
+        {
+            array[i][j] = 0;
+        }
+        array[i][i]= 1;
     }
     return array;
 }

@@ -12,6 +12,7 @@
 // Load images and labels
 float *init_1d_array(int size);
 float **init_2d_array(int rows, int cols);
+float **init_2d_id_array(int rows, int cols);
 float ***init_image(int channelSize, int inputSize);
 float ****init_kernel(int numFilters, int channelSize, int kernelSize);
 float ****loadImages(const char *filename, int numImages, int numChannels);

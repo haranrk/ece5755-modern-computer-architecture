@@ -8,33 +8,22 @@
 
 void test_matmul_square_matrices(void)
 {
-    float A[3][3] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    float B[3][3] = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
+    const int DIMS = 5;
+    float **A_m = init_2d_array(DIMS, DIMS);
+    float **B_m = init_2d_id_array(DIMS, DIMS);
 
-    float **A_m = init_2d_array(3, 3);
-    float **B_m = init_2d_array(3, 3);
+    // for (int i = 0; i < 1000; i++)
+    // {
+    //     float **C = matmul_blocking(A_m, B_m, 3, 3, 3, 3);
+    // }
 
-    for (int i = 0; i < 3; i++)
+    float **C = matmul_blocking(A_m, B_m, DIMS, DIMS, DIMS, DIMS);
+
+    for (int i = 0; i < DIMS; i++)
     {
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < DIMS; j++)
         {
-            A_m[i][j] = A[i][j];
-            B_m[i][j] = B[i][j];
-        }
-    }
-
-    for (int i = 0; i < 1000; i++)
-    {
-        float **C = matmul(A_m, B_m, 3, 3, 3, 3);
-    }
-
-    float **C = matmul(A_m, B_m, 3, 3, 3, 3);
-
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            TEST_ASSERT_FLOAT_WITHIN(1e-6, C[i][j], A[i][j]);
+            TEST_ASSERT_FLOAT_WITHIN(1e-6, C[i][j], A_m[i][j]);
         }
     }
 }
@@ -55,7 +44,7 @@ void test_matmul_incompatible_dimensions(void)
     }
 
     // Run function under test
-    float **C = matmul(A, B, 2, 3, 2, 2);
+    float **C = matmul_blocking(A, B, 2, 3, 2, 2);
 
     // Check expectations
     UNITY_TEST_ASSERT_NULL(C, __LINE__, "Expected NULL!");
@@ -78,7 +67,7 @@ void test_matmul_square_matrices1(void)
 
     for (int i = 0; i < 100; i++)
     {
-        float **C = matmul(A_m, B_m, size, size, size, size);
+        float **C = matmul_blocking(A_m, B_m, size, size, size, size);
     }
 }
 
@@ -90,6 +79,6 @@ void test_matmul_square_matrices2(void)
 
     for (int i = 0; i < 1; i++)
     {
-        float **C = matmul(A_m, B_m, size, size, size, size);
+        float **C = matmul_blocking(A_m, B_m, size, size, size, size);
     }
 }
