@@ -29,7 +29,7 @@ float **matmul(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_c
 
     return C;
 }
-float **matmul_blocking(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_cols)
+float **matmul_blocking(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_cols, int BLOCK_SIZE)
 {
     if (A_cols != B_rows)
     {
@@ -47,9 +47,6 @@ float **matmul_blocking(float **A, float **B, int A_rows, int A_cols, int B_rows
         }
     }
 
-    // const int ROWS_PER_BLOCK = 2;
-    // const int COLS_PER_BLOCK = 2;
-    const int BLOCK_SIZE = 3;
     const int COMMON_DIM_SIZE = A_cols;
 
     for (int i_outer = 0; i_outer < A_rows; i_outer += BLOCK_SIZE)
