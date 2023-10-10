@@ -4,7 +4,7 @@
 
 enum Impl {
   NAIVE,
-  TILING,
+  TILED,
   UNKNOWN
 };
 
@@ -20,7 +20,7 @@ void run_matmul(enum Impl impl, int dims, int block_size, int iterations) {
                 float **C = matmul(A, B, dims, dims, dims, dims);
             }
             break;
-        case TILING:
+        case TILED:
             printf("Tiling\n");
             for (int i = 1; i<iterations; i++){
                 float **C = matmul_blocking(A, B, dims, dims, dims, dims, block_size);
@@ -37,23 +37,23 @@ void run_matmul(enum Impl impl, int dims, int block_size, int iterations) {
 enum Impl stringToEnum(const char *str) {
     if (strcmp(str, "NAIVE") == 0) {
         return NAIVE;
-    } else if (strcmp(str, "TILING") == 0) {
-        return TILING;
+    } else if (strcmp(str, "TILED") == 0) {
+        return TILED;
     } else {
         return UNKNOWN;
     }
 }
 
 int main(int argc, char *argv[]){
-  if (argc < 3){
-    printf("Usage: ./main <impl> <dims> <block_size>\n");
+  if (argc < 4){
+    printf("Usage: ./main <impl> <dims> <block_size> <iterations>\n");
     return 0;
   }
   char *input = argv[1];
   enum Impl impl = stringToEnum(argv[1]);
   int dims = atoi(argv[2]);
   int block_size = atoi(argv[3]);
-  int iterations = 10;
+  int iterations = atoi(argv[4]);
   run_matmul( impl, dims, block_size, iterations);
   return 0;
 }

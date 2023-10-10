@@ -13,7 +13,7 @@ TEST_EXECUTABLES = $(patsubst %.c,%,$(TEST_FILES))
 
 main.out: main.c
 	$(CC) -o main.out main.c $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
-	./main NAIVE 100 5
+	./main.out NAIVE 100 5 1
 
 .PHONY: test
 test: all_tests
