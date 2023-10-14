@@ -13,13 +13,16 @@ float **matmul(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_c
     for (int i = 0; i < A_rows; i++)
     {
         C[i] = (float *)malloc(B_cols * sizeof(float));
+        for (int j = 0; j < B_cols; j++)
+        {
+            C[i][j] = 0;
+        }
     }
 
     for (int i = 0; i < A_rows; i++)
     {
         for (int j = 0; j < B_cols; j++)
         {
-            C[i][j] = 0;
             for (int k = 0; k < A_cols; k++)
             {
                 C[i][j] += A[i][k] * B[k][j];
@@ -46,8 +49,6 @@ float **matmul_blocking(float **A, float **B, int A_rows, int A_cols, int B_rows
             C[i][j] = 0;
         }
     }
-
-    const int COMMON_DIM_SIZE = A_cols;
 
     for (int i_outer = 0; i_outer < A_rows; i_outer += BLOCK_SIZE)
     {
