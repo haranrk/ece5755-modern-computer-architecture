@@ -99,25 +99,30 @@ def compare_naive_vs_tiled(block_size=128):
 
 
 def plot_top_down():
+    categories = ["Frontend Bound", "Bad Speculation", "Backend Bound", "Retiring"]
+
     # Data for "256x256" (updated)
-    slots_256x256 = [4.5, 0.8, 3.5, 91.2]
+    # slots_128x128 = [9.7, 1.3, 1.6, 87.4]
+    slots_128x128 = [15.5, 0.5, 0.5, 83.5]
 
     # Data for "512x512" (updated)
-    slots_512x512 = [0.3, 0.4, 11.0, 88.3]
+    # slots_256x256 = [9.2, 1.0, 0.6, 89.2]
+    slots_256x256 = [15.1, 0.3, 0.7, 83.9]
 
     # Data for "1024x1024" (updated)
-    slots_1024x1024 = [0.2, 0.3, 15.3, 84.3]
-
-    bubbles = ["10x10", "512x512", "1024x1024"]
-    categories = ["Frontend Bound", "Bad Speculation", "Backend Bound", "Retiring"]
+    # slots_1024x1024 = [8.9, 1.0, 0.9, 89.2]
+    slots_1024x1024 = [14.3, 0.3, 2.3, 83.1]
+    
     percent_slots = [
         slots_256x256,
-        slots_512x512,
+        slots_128x128,
         slots_1024x1024,
     ]
 
+    bubbles = ["10x10", "512x512", "1024x1024"]
+
     colors = ["#419D78", "#3C91E6", "#904E55", "#6C596E"]
-    ax = plt.subplots()
+    _,ax = plt.subplots()
 
     for i, bubble in enumerate(bubbles):
         left = 0
@@ -127,10 +132,12 @@ def plot_top_down():
             left += width
 
     ax.set_xlabel("%")
-    ax.set_title("Pipeline Bottleneck Breakdown: Matmul (No TILING)")
+    block_size = 1
+    suffix = f"{block_size=}"
+    ax.set_title(f"Pipeline Bottleneck Breakdown: Matmul ({suffix})")
     ax.legend(categories, loc="upper right")
 
-    plt.savefig(f"{PLOTS_DIR}/pipeline_bottleneck_breakdown.png")
+    plt.savefig(f"{PLOTS_DIR}/pipeline_bottleneck_breakdown{suffix}.png")
     plt.show()
 
 
