@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdbool.h>
 
-
 float **matmul(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_cols)
 {
     if (A_cols != B_rows)
@@ -85,9 +84,8 @@ float *init_array(int size)
     return array;
 }
 
-
-
-float **matmul_sparse(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_cols ) {
+float **matmul_sparse(float **A, float **B, int A_rows, int A_cols, int B_rows, int B_cols)
+{
     if (A_cols != B_rows)
     {
         printf("Matrix dimensions incompatible for multiplication.\n");
@@ -95,87 +93,70 @@ float **matmul_sparse(float **A, float **B, int A_rows, int A_cols, int B_rows, 
     }
 
     int AnValues = 0;
-    int ArowIndexArrayLen = 0;
+    float *ARowIndexArray = init_array(A_rows + 1);
 
+    int valuesInThisRow = 0;
     for (int i = 0; i < A_rows; i++)
     {
-        bool valuesInThisRow = false;
         for (int j = 0; j < A_cols; j++)
         {
-            if(A[i][j] != 0){
+            if (A[i][j] != 0)
+            {
                 AnValues++;
-                valuesInThisRow = true;
+                valuesInThisRow++;
             }
         }
-        if (valuesInThisRow){
-            ArowIndexArrayLen++;
-        }
+        ARowIndexArray[i + 1] = valuesInThisRow;
     }
 
     float *AValues = init_array(AnValues);
-    float *ARowIndexArray = init_array(ArowIndexArrayLen);
     float *AColIndexArray = init_array(AnValues);
 
-    int rowPointer = 0;
     int colPointer = 0;
     for (int i = 0; i < A_rows; i++)
     {
-        bool valuesInThisRow = false;
         for (int j = 0; j < A_cols; j++)
         {
-            if(A[i][j] != 0){
+            if (A[i][j] != 0)
+            {
                 AValues[colPointer] = A[i][j];
                 AColIndexArray[colPointer] = j;
                 colPointer++;
-                valuesInThisRow = true;
             }
-        }
-        if (valuesInThisRow){
-            ARowIndexArray[rowPointer] = i;
-            rowPointer++;
         }
     }
 
     int BnValues = 0;
-    int BColIndexArrayLen = 0;
+    float *BColIndexArray = init_array(B_cols + 1);
 
+    int valuesInThisCol = 0;
     for (int i = 0; i < B_cols; i++)
     {
-        bool valuesInThisCol = false;
         for (int j = 0; j < B_rows; j++)
         {
-            if(B[i][j] != 0){
+            if (B[i][j] != 0)
+            {
                 BnValues++;
-                valuesInThisCol = true;
+                valuesInThisCol++;
             }
         }
-        if (valuesInThisCol){
-            BColIndexArrayLen++;
-        }
+        BColIndexArray[i + 1] = valuesInThisCol;
     }
 
     float *BValues = init_array(BnValues);
     float *BRowIndexArray = init_array(BnValues);
-    float *BColIndexArray = init_array(BColIndexArrayLen);
-    // printf("nValues: %d, rowIndexArrayLen: %d \n", nValues, rowIndexArrayLen );
 
-    rowPointer = 0;
-    colPointer = 0;
+    int rowPointer = 0;
     for (int i = 0; i < B_cols; i++)
     {
-        bool valuesInThisCol = false;
         for (int j = 0; j < B_rows; j++)
         {
-            if(B[i][j] != 0){
+            if (B[i][j] != 0)
+            {
                 BValues[rowPointer] = B[i][j];
                 BRowIndexArray[rowPointer] = j;
                 rowPointer++;
-                valuesInThisCol = true;
             }
-        }
-        if (valuesInThisCol){
-            BColIndexArray[colPointer] = i;
-            colPointer++;
         }
     }
 
@@ -189,18 +170,39 @@ float **matmul_sparse(float **A, float **B, int A_rows, int A_cols, int B_rows, 
         }
     }
 
-
-    for (int aRowPointer = 0; aRowPointer < ArowIndexArrayLen; aRowPointer++)
-    {
-        for (int j = 0; j < B_cols; j++)
+    for (int iterations; iterations < 20; iterations++) {
+        for (int a_row = 0; a_row < A_rows + 1; a_row++)
         {
-            for (int k = 0; k < A_cols; k++)
+            int a_col_idx = ARowIndexArray[a_row];
+            int a_col_end_idx = ARowIndexArray[a_row + 1];
+            for (int b_col = 0; b_col < B_rows + 1; b_col++)
             {
-                C[i][j] += A[i][k] * B[k][j];
+                int b_row_idx = BColIndexArray[b_col];
+                int b_row_end_idx = BColIndexArray[b_col + 1];
+
+                C[a_row][b_col] = 0;
+                while (a_col_idx < a_col_end_idx && b_row_idx < b_row_end_idx)
+                {
+                    int a_col = AColIndexArray[a_col_idx];
+                    int b_row = BRowIndexArray[b_row_idx];
+
+                    if (a_col == b_row)
+                    {
+                        C[a_row][b_col] += A[a_row][a_col] * B[b_row][b_col];
+                        a_col_idx++;
+                        b_row_idx++;
+                    }
+                    else if (a_col < b_row)
+                    {
+                        a_col_idx++;
+                    }
+                    else
+                    {
+                        b_row_idx++;
+                    }
+                }
             }
         }
     }
-
-    return A;
-
+    return C;
 }

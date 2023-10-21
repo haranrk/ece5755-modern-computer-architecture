@@ -18,8 +18,10 @@ float **init_2d_array(int rows, int cols)
         array[i] = malloc(cols * sizeof(float));
         for (int j = 0; j < cols; j++)
         {
-            array[i][j] = i+j;
+            array[i][j] = (i+j)*((i+j)%2);
+            printf("%f ",  array[i][j]);
         }
+        printf("\n");
     }
     return array;
 }

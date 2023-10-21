@@ -22,7 +22,7 @@ def compare_diff_block_sizes():
     # block_sizes = [60, 80, 100, 120, 140, 160, 180, 200,220, 240, 260]
     dims = 1024
     iterations = 2
-    shell_cmd_prefix = ["./main.out", "TILED", str(dims)]
+    shell_cmd_prefix = ["./main.out", "SPARSE", str(dims)]
     shell_cmd_postfix = [str(iterations)]
 
     for block_size in block_sizes:
@@ -53,16 +53,16 @@ def compare_diff_block_sizes_with_naive_baseline():
         )
         runtimes_naive.append(benchmark(run_shell_cmd, [cmd]))
         cmd = " ".join(
-            ["./main.out", "TILED", str(dims), str(block_sz), str(iterations)]
+            ["./main.out", "SPARSE", str(dims), str(block_sz), str(iterations)]
         )
         runtimes_tiled.append(benchmark(run_shell_cmd, [cmd]))
 
     print(runtimes_naive, runtimes_tiled)
     plt.plot(block_sizes, runtimes_naive, label="Naive", marker="o")
-    plt.plot(block_sizes, runtimes_tiled, label="Tiled", marker="o")
+    plt.plot(block_sizes, runtimes_tiled, label="SPARSE", marker="o")
     plt.xlabel("Block Size")
     plt.ylabel("Runtime (s)")
-    plt.title(f"Naive vs Tiled Performance Analysis (dims={dims})")
+    plt.title(f"Naive vs SPARSE Performance Analysis (dims={dims})")
     plt.legend()
     plt.grid(True)
     plt.savefig(
@@ -83,14 +83,14 @@ def compare_naive_vs_tiled(block_size=128):
     for dim in dims:
         cmd = " ".join(shell_cmd_prefix + ["NAIVE", str(dim)] + shell_cmd_postfix)
         runtimes_naive.append(benchmark(run_shell_cmd, [cmd]))
-        cmd = " ".join(shell_cmd_prefix + ["TILED", str(dim)] + shell_cmd_postfix)
+        cmd = " ".join(shell_cmd_prefix + ["SPARSE", str(dim)] + shell_cmd_postfix)
         runtimes_tiled.append(benchmark(run_shell_cmd, [cmd]))
 
     plt.plot(dims, runtimes_naive, label="Naive", marker="o")
-    plt.plot(dims, runtimes_tiled, label="Tiled", marker="o")
+    plt.plot(dims, runtimes_tiled, label="SPARSE", marker="o")
     plt.xlabel("Matrix Dimension")
     plt.ylabel("Runtime (s)")
-    plt.title(f"Naive vs Tiled Performance Analysis (block_size={block_size})")
+    plt.title(f"Naive vs SPARSE Performance Analysis (block_size={block_size})")
     plt.legend()
     plt.grid(True)
     plt.savefig(f"{PLOTS_DIR}/naive_vs_tiled_{block_size=}.png")
@@ -142,13 +142,13 @@ def plot_top_down():
 
 
 if __name__ == "__main__":
-    # compare_diff_block_sizes()
-    # compare_diff_block_sizes_with_naive_baseline()
+    compare_diff_block_sizes()
+    compare_diff_block_sizes_with_naive_baseline()
 
-    # block_sizes = [1,80, 128]
-    # block_sizes = [256, 512, 1024]
-    # block_sizes = [140, 160, 180, 200,220, 240, 260]
-    # for block_sz in block_sizes:
-    #   compare_naive_vs_tiled(block_sz)
-    fire.Fire()
+    block_sizes = [1,80, 128]
+    block_sizes.extend([256, 512, 1024])
+    block_sizes.extend([140, 160, 180, 200,220, 240, 260])
+    for block_sz in block_sizes:
+      compare_naive_vs_tiled(block_sz)
+    # fire.Fire()
     print("Finished")

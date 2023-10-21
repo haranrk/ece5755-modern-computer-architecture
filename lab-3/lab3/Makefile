@@ -12,8 +12,8 @@ MODULE_TEST_FILES = $(wildcard ./tests/test*.c)
 TEST_EXECUTABLES = $(patsubst %.c,%,$(TEST_FILES))
 
 main.out: main.c $(COMMON_SRC)
-	$(CC) -o main.out main.c $(COMMON_SRC) $(CFLAGS) $(HDF5_FLAGS) 
-	./main.out SPARSE 100 5 1
+	$(CC) -o main.out main.c $(COMMON_SRC) $(CFLAGS) 
+	./main.out SPARSE 5 5 1
 
 .PHONY: test
 test: all_tests
