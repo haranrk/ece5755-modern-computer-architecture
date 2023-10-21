@@ -75,25 +75,23 @@ def compare_diff_block_sizes_with_naive_baseline():
 def compare_naive_vs_tiled(block_size=128):
     runtimes_naive = []
     runtimes_tiled = []
-    dims = [3, 10, 128, 512, 1024, 2048]
-    iterations = 3
+    dims = [3, 10, 128, 512 ]
     shell_cmd_prefix = ["./main.out"]
-    shell_cmd_postfix = [str(block_size), str(iterations)]
 
     for dim in dims:
-        cmd = " ".join(shell_cmd_prefix + ["NAIVE", str(dim)] + shell_cmd_postfix)
+        cmd = " ".join(shell_cmd_prefix + ["NAIVE", str(dim), "1", "10"])
         runtimes_naive.append(benchmark(run_shell_cmd, [cmd]))
-        cmd = " ".join(shell_cmd_prefix + ["SPARSE", str(dim)] + shell_cmd_postfix)
+        cmd = " ".join(shell_cmd_prefix + ["SPARSE", str(dim), "1", "1"])
         runtimes_tiled.append(benchmark(run_shell_cmd, [cmd]))
 
     plt.plot(dims, runtimes_naive, label="Naive", marker="o")
     plt.plot(dims, runtimes_tiled, label="SPARSE", marker="o")
     plt.xlabel("Matrix Dimension")
     plt.ylabel("Runtime (s)")
-    plt.title(f"Naive vs SPARSE Performance Analysis (block_size={block_size})")
+    plt.title(f"Naive vs Sparse Performance Analysis")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"{PLOTS_DIR}/naive_vs_tiled_{block_size=}.png")
+    plt.savefig(f"{PLOTS_DIR}/naive_vs_tiled_2.png")
     plt.show()
     plt.clf()
 
@@ -103,23 +101,22 @@ def plot_top_down():
 
     # Data for "256x256" (updated)
     # slots_128x128 = [9.7, 1.3, 1.6, 87.4]
-    slots_128x128 = [15.5, 0.5, 0.5, 83.5]
+    slots_128x128 = [3.4, 0.2, 28.5, 67.8]
 
     # Data for "512x512" (updated)
     # slots_256x256 = [9.2, 1.0, 0.6, 89.2]
-    slots_256x256 = [15.1, 0.3, 0.7, 83.9]
+    slots_256x256 = [32.4, 2.7, 18.7, 46.2]
 
     # Data for "1024x1024" (updated)
     # slots_1024x1024 = [8.9, 1.0, 0.9, 89.2]
-    slots_1024x1024 = [14.3, 0.3, 2.3, 83.1]
+    # slots_1024x1024 = [14.3, 0.3, 2.3, 83.1]
     
     percent_slots = [
         slots_256x256,
         slots_128x128,
-        slots_1024x1024,
     ]
 
-    bubbles = ["10x10", "512x512", "1024x1024"]
+    bubbles = ["Matmul", "Sparse Matmul" ]
 
     colors = ["#419D78", "#3C91E6", "#904E55", "#6C596E"]
     _,ax = plt.subplots()
@@ -134,21 +131,23 @@ def plot_top_down():
     ax.set_xlabel("%")
     block_size = 1
     suffix = f"{block_size=}"
-    ax.set_title(f"Pipeline Bottleneck Breakdown: Matmul ({suffix})")
+    ax.set_title(f"Pipeline Bottleneck Breakdown")
     ax.legend(categories, loc="upper right")
 
+    print(f"{PLOTS_DIR}/pipeline_bottleneck_breakdown{suffix}.png")
     plt.savefig(f"{PLOTS_DIR}/pipeline_bottleneck_breakdown{suffix}.png")
     plt.show()
 
 
 if __name__ == "__main__":
-    compare_diff_block_sizes()
-    compare_diff_block_sizes_with_naive_baseline()
+    # compare_diff_block_sizes()
+    # compare_diff_block_sizes_with_naive_baseline()
 
-    block_sizes = [1,80, 128]
-    block_sizes.extend([256, 512, 1024])
-    block_sizes.extend([140, 160, 180, 200,220, 240, 260])
-    for block_sz in block_sizes:
-      compare_naive_vs_tiled(block_sz)
+    # block_sizes = [1,80, 128]
+    # block_sizes.extend([256, 512, 1024])
+    # block_sizes.extend([140, 160, 180, 200,220, 240, 260])
+    # for block_sz in block_sizes:
+    # compare_naive_vs_tiled(1)
+    plot_top_down()
     # fire.Fire()
     print("Finished")

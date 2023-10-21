@@ -19,7 +19,6 @@ float **init_2d_array(int rows, int cols)
         for (int j = 0; j < cols; j++)
         {
             array[i][j] = (i+j)*((i+j)%2);
-            printf("%f ",  array[i][j]);
         }
         printf("\n");
     }

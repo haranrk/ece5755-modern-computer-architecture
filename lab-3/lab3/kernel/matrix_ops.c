@@ -170,7 +170,7 @@ float **matmul_sparse(float **A, float **B, int A_rows, int A_cols, int B_rows, 
         }
     }
 
-    for (int iterations; iterations < 20; iterations++) {
+    for (int iterations; iterations < 10; iterations++) {
         for (int a_row = 0; a_row < A_rows + 1; a_row++)
         {
             int a_col_idx = ARowIndexArray[a_row];

@@ -11,7 +11,7 @@ enum Impl {
 
 void run_matmul(enum Impl impl, int dims, int block_size, int iterations) {
     float **A = init_2d_array(dims, dims);
-    float **B = init_2d_id_array(dims, dims);
+    float **B = init_2d_array(dims, dims);
     printf("Params: dims: %d, block_size: %d, iterations: %d\n", dims, block_size, iterations);
 
     switch(impl){
